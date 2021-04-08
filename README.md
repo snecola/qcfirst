@@ -43,6 +43,7 @@ Students can search and enroll in new courses using an advanced search form or a
 - courseSearch.html
 - dropCourse.html
 - swapCourse.html
+
 Instructors can edit or delete courses from the course view page and add new courses from their dashboard.
 - addNewCourse.html
 - editCourse.html
