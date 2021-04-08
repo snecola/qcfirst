@@ -39,8 +39,10 @@ The course view page has different templates to insert information using js for 
 - courseManageInstructor.html
 - courseManageStudent.html
 #### Searching and adding new courses
-Students can search and enroll in new courses using an advanced search form or a search bar on the dashboard.
+Students can search and enroll in new courses using an advanced search form or a search bar on the dashboard. They can also drop or swap courses.
+- courseSearch.html
+- dropCourse.html
+- swapCourse.html
 Instructors can edit or delete courses from the course view page and add new courses from their dashboard.
 - addNewCourse.html
-- courseSearch.html
 - editCourse.html
