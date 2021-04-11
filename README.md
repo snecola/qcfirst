@@ -1,5 +1,4 @@
 # QCFirst
-Steven Necola &amp; Minas Karagiorgis 355 Project
 ## Goal:
 - Course enrollment / management system for professors and students.
 - Students can enroll, bookmark, and search for courses.
