@@ -1,0 +1,65 @@
+
+.homepageForms {
+    background-color: lightcoral;
+    border-radius: 10px;
+    margin: auto;
+    padding: 5%;
+}
+
+
+@media (min-width: 0px) {
+    .homepageForms {
+        max-width: 100%;
+    }
+}
+
+
+/* Small */
+@media (min-width: 576px) {
+    .homepageForms {
+        max-width: 80%;
+    }
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .homepageForms {
+        max-width: 80%;
+    }
+}
+
+/*!* Medium devices (desktops, 992px and up) *!*/
+@media (min-width: 992px) {
+    .homepageForms {
+        max-width: 70%;
+    }
+}
+
+/*!* Large devices (large desktops, 1200px and up) *!*/
+@media (min-width: 1200px) {
+    .homepageForms {
+        max-width: 50%;
+    }
+}
+
+
+
+
+.btn-primary {
+    color: white;
+    background-color: black;
+}
+
+.btn-primary:hover {
+    color:white;
+    background-color: gray;
+}
+
+a {
+    color:black;
+}
+
+.row {
+    margin:auto;
+    padding: 10px;
+}

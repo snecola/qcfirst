@@ -1,0 +1,77 @@
+
+
+
+@media (min-width: 0px) {
+    .course {
+
+    }
+}
+
+/* Small devices (mobile)*/
+@media (min-width: 576px) {
+
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+
+}
+
+/*!* Medium devices (desktops, 992px and up) *!*/
+@media (min-width: 992px) {
+
+}
+
+/*!* Large devices (large desktops, 1200px and up) *!*/
+@media (min-width: 1200px) {
+
+}
+
+.course {
+    background-color: lightcoral;
+    /*background-image: url("https://wallpaperaccess.com/full/1428481.jpg");*/
+    border-radius: 20px;
+    margin: 5px;
+    height: 10rem;
+    text-align: center;
+    vertical-align: center;
+    line-height: 10rem;
+    color: white;
+    font-size: larger;
+    font-weight: bolder;
+}
+
+.course:hover {
+    background-color: darkred;
+    opacity: 80%;
+}
+
+#courseSearchbar {
+    width: 60%;
+}
+
+#enrolledCourses, #bookMarkedCourses {
+    max-width: 80%;
+    min-width: 30%;
+}
+
+.courseLink {
+    display:block;
+    position: relative;
+    top:0;
+    left:0;
+    width: auto;
+    height: auto;
+    color: white;
+    font-style: normal;
+    text-decoration: none;
+}
+
+.courseLink:hover {
+    color: white;
+}
+
+.dropSwap {
+    display: inline-block;
+    width: 15rem;
+}
