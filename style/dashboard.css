@@ -72,6 +72,49 @@
 }
 
 .dropSwap {
-    display: inline-block;
-    width: 15rem;
+    margin: 5px;
+}
+
+.btn-secondary {
+    background-color: black;
+    color: white;
+}
+
+.enrollBookmark {
+    width: 30%;
+    margin-right: 5px;
+}
+
+
+
+ul {
+    list-style: none;
+}
+
+.box {
+    border-radius: 25px;
+    background: lightcoral;
+    margin: 5px;
+    padding: 1rem;
+}
+
+.btn-primary {
+    background: darkred;
+}
+
+.btn-primary:hover {
+    background: lightcoral;
+}
+.btn-primary:active {
+    background: darkred;
+}
+.btn-primary:focus {
+    background: lightcoral;
+}
+
+a {
+    color: black;
+}
+.editBtn {
+    width: 15%;
 }

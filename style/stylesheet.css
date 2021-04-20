@@ -11,6 +11,10 @@
     .homepageForms {
         max-width: 100%;
     }
+
+    body {
+        background-color: lightcoral;
+    }
 }
 
 
@@ -19,12 +23,20 @@
     .homepageForms {
         max-width: 80%;
     }
+
+    body {
+        background-color: lightcoral;
+    }
 }
 
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) {
     .homepageForms {
         max-width: 80%;
+    }
+
+    body {
+        background-color: white;
     }
 }
 
@@ -62,4 +74,10 @@ a {
 .row {
     margin:auto;
     padding: 10px;
+}
+
+
+.tempNav {
+    list-style: none;
+    background-color: lightgray;
 }

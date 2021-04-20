@@ -1,54 +1,69 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>CSS355 - QCFirst</title>
+	<title>Course View - QCFirst</title>
 	<!--Boot strap CSS hosted by jsdelivr-->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+	<link href="../style/dashboard.css" rel="stylesheet">
 </head>
-  <body>
-  <header id="header" class="header">
-	  <h1 id="heading"><a href="index.html">QCFirst</a></h1>
-	  <a id="logoutButton" class="btn btn-secondary" href="index.html">Log Out</a>
+<body>
+<header id="header" class="navbar-header">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-8">
+				<h1 id="heading"><a href="index.html">QCFirst</a></h1>
+			</div>
+			<div class="col-4 d-flex justify-content-center">
+				<a id="logoutButton" class="btn-sm btn-secondary" href="index.html">Log Out</a>
+			</div>
 
-  </header>
-  	<main>
-		<h1>CS355</h1>
-		<a href="editCourse.html" id="editButton" class="btn btn-primary">Edit</a>
-      	<div id="information">
-  		<h2>Information</h2>
+		</div>
+	</div>
+</header>
+<main>
+	<div class="container-fluid mainContainer">
+		<div class="row">
+			<div class="col"><h2 id="className" class="d-flex justify-content-center">CS355</h2></div>
+		</div>
+		<div class="row d-flex justify-content-center">
+			<a href="editCourse.html" class="editBtn btn-primary btn">Edit</a>
+		</div>
+		<div class="row">
+			<div id="information" class="col box">
+				<h3>Information</h3>
+				<ul>
+					<li><strong>Instructor:</strong> <span id="instructor">Mark Abramov</span></li>
+					<li><strong>ID:</strong> <span id="classId">CS355-22</span></li>
+					<li><strong>Department:</strong> <span id="department">Computer Science</span></li>
+					<li><strong>Semester:</strong> <span id="semester">Spring 2021</span></li>
+					<li><strong>Enrollment Dead Line:</strong> <span id="deadLine"><date>January 8th</date></span></li>
+				</ul>
+			</div>
+			<div class="col">
+				<div id="description" class="col box">
+					<h3>Description</h3>
+					<p id="classDescription">
+						Adventure into web programming
+					</p>
+				</div>
+				<div id="capacity" class="col box">
+					<h3>Capacity</h3>
+					<p><span id="currentlyEnrolledCount">0</span>/<span id="capacityCount">0</span></p>
+				</div>
+			</div>
+		</div>
 
-  		<ul>
-  			<li>Instructor: <span id="instructor"></span></li>
-  			<li>ID: <span id="classId"></span></li>
-  			<li>Department: <span id="department"></span></li>
-  			<li>Semester: <span id="semester"></span></li>
-  			<li>Dead Line: <span id="deadLine"></span></li>
-  		</ul>
-      </div>
-      <div id="description">
-  		<h2>Description</h2>
-  		<p id="classDescription">                    
+		<div class="row">
+			<div id="schedule" class="col box">
+				<h3>Schedule</h3>
+				<table>
 
-  		</p>
-      </div>
-
-      <div id="schedule">
-  		<h2>Schedule</h2>
-  		<p>
-  			
-  		</p>
-      </div>
-
-      <div id="capacity">
-  		<h2>Capacity</h2>
-  		<p><span id="currentlyEnrolledCount">0</span>/<span id="capacityCount">0</span></p>
-  		<ul>Students:</ul>
-      </div>
-
-  	</main>
-  </body>
-
-  </html>
+				</table>
+			</div>
+		</div>
+	</div>
+</main>
+</body>
+</html>
