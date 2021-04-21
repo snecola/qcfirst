@@ -65,3 +65,7 @@ a {
     top: auto;
     left: 10px;
 }
+
+ul {
+    list-style: none;
+}

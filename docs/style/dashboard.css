@@ -29,7 +29,7 @@
     width: 60%;
 }
 
-#enrolledCourses, #bookMarkedCourses {
+.courseContainers {
     max-width: 80%;
     min-width: 30%;
 }
