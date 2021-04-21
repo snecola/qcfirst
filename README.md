@@ -23,6 +23,7 @@
 
 ## Code:
 ### HTML Structure:
+All HTML files validated by https://validator.w3.org/
 #### Login - Signup - Forgot password
 Plan is for anything referring to index.html to refer you to the appropriate dashboard is user session is valid. Still have to learn backend development.
 - index.html
@@ -42,7 +43,17 @@ Students can search and enroll in new courses using an advanced search form or a
 - courseSearch.html
 - dropCourse.html
 - swapCourse.html
+- searchResults.html
 
 Instructors can edit or delete courses from the course view page and add new courses from their dashboard.
 - addNewCourse.html
 - editCourse.html
+
+### CSS Structure:
+All css files validated by https://jigsaw.w3.org/css-validator/
+#### Bootstrap Framework for responsive design
+Using a mobile first approach with Bootstrap's Flexbox grid system, the QCFirst webapp is as functional, accessable, and pleasing to use on every device.
+- There are separate CSS style sheets for all non-bootstrap styling rules. Usually consisting of padding, margins, breakpoints, and colors.
+- The grid system is reliant on bootstrap and its HTML classes.
+- Icons are flush with the design and all SVG files were drawn by me using Google Drawings.
+
