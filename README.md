@@ -32,22 +32,22 @@ Plan is for anything referring to index.html to refer you to the appropriate das
 #### Dashboard for Instructors - Dashboard for Students
 Plan is to set up the dashboard with the appropriate information based on the user. 
 The HTML structure is present and ready to insert classes based on user's backend information.
-- studentDashboard.html
-- instructorDash.html
+- student-dashboard.html
+- instructor-dash.html
 #### Course Views
 The course view page has different templates to insert information using js for instructors and students, as well as editability options for instructors.
-- courseManageInstructor.html
-- courseManageStudent.html
+- course-manageinstructor.html
+- course-manage-student.html
 #### Searching and adding new courses
 Students can search and enroll in new courses using an advanced search form or a search bar on the dashboard. They can also drop or swap courses.
-- courseSearch.html
-- dropCourse.html
-- swapCourse.html
-- searchResults.html
+- course-search.html
+- drop-course.html
+- swap-course.html
+- search-results.html
 
 Instructors can edit or delete courses from the course view page and add new courses from their dashboard.
-- addNewCourse.html
-- editCourse.html
+- add-new-course.html
+- edit-course.html
 
 ### CSS Structure:
 All css files validated by https://jigsaw.w3.org/css-validator/
