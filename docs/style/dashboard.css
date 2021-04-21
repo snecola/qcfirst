@@ -2,9 +2,7 @@
 
 
 @media (min-width: 0px) {
-    .course {
 
-    }
 }
 
 /* Small devices (mobile)*/
@@ -25,25 +23,6 @@
 /*!* Large devices (large desktops, 1200px and up) *!*/
 @media (min-width: 1200px) {
 
-}
-
-.course {
-    background-color: lightcoral;
-    /*background-image: url("https://wallpaperaccess.com/full/1428481.jpg");*/
-    border-radius: 20px;
-    margin: 5px;
-    height: 10rem;
-    text-align: center;
-    vertical-align: center;
-    line-height: 10rem;
-    color: white;
-    font-size: larger;
-    font-weight: bolder;
-}
-
-.course:hover {
-    background-color: darkred;
-    opacity: 80%;
 }
 
 #courseSearchbar {
@@ -80,22 +59,8 @@
     color: white;
 }
 
-.enrollBookmark {
-    width: 30%;
-    margin-right: 5px;
-}
-
-
-
 ul {
     list-style: none;
-}
-
-.box {
-    border-radius: 25px;
-    background: lightcoral;
-    margin: 5px;
-    padding: 1rem;
 }
 
 .btn-primary {
@@ -115,6 +80,7 @@ ul {
 a {
     color: black;
 }
-.editBtn {
-    width: 15%;
+
+#searchButton {
+    min-width: 3rem;
 }
