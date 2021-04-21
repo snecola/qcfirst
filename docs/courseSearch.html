@@ -6,48 +6,78 @@
     <title>Course Search - QCFirst</title>
     <!--Boot strap CSS hosted by jsdelivr-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <link href="style/forms.css" rel="stylesheet">
+    <link rel="icon" href="images/QCFirst_No_Text_Icon.png">
+
 </head>
 <body>
 
 <header id="header" class="header">
-    <h1 id="heading"><a href="index.html">QCFirst</a></h1>
-    <a id="logoutButton" class="btn btn-secondary" href="index.html">Log Out</a>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a href="studentDashboard.html">
+            <img src="images/QCFirst_Long_Logo.svg"
+                 alt="QCFirst Logo"
+                 height="100"
+                 width="300" />
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="studentDashboard.html">Dashboard</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="index.html">Log Out</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 </header>
 
 <main>
-    <h2>Find Course</h2>
-    <form>
-        <div class="form-group">
-            <label for="courseNum">Course Number</label>
-            <input type="number" class="form-control" id="courseNum" placeholder="100">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col"><h2 class="d-flex justify-content-center">Find Course</h2></div>
         </div>
-        <div class="form-group">
-            <label for="courseDepartment">Course Department</label>
-            <select class="form-control" id="courseDepartment" required>
-                <option disabled>Select a department</option>
-                <option>Computer Science</option>
-                <option>Math</option>
-                <option>Physics</option>
-                <option>Anthropology</option>
-                <option>History</option>
-            </select>
-        </div>
+        <form>
+            <div class="form-group">
+                <label for="courseNum">Course Number</label>
+                <input type="number" class="form-control" id="courseNum" placeholder="100">
+            </div>
+            <div class="form-group">
+                <label for="courseDepartment">Course Department</label>
+                <select class="form-control" id="courseDepartment" required>
+                    <option disabled>Select a department</option>
+                    <option>Computer Science</option>
+                    <option>Math</option>
+                    <option>Physics</option>
+                    <option>Anthropology</option>
+                    <option>History</option>
+                </select>
+            </div>
 
-        <div class="form-group">
-            <label for="semester">Semester</label>
-            <select multiple class="form-control" id="semester" required>
-                <option>Summer 2021</option>
-                <option>Fall 2021</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="hasSpots">Has available spots</label>
-            <input type="checkbox" id="hasSpots">
-        </div>
+            <div class="form-group">
+                <label for="semester">Semester</label>
+                <select multiple class="form-control" id="semester" required>
+                    <option>Summer 2021</option>
+                    <option>Fall 2021</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="hasSpots">Has available spots</label>
+                <input type="checkbox" id="hasSpots">
+            </div>
 
-        <button class="btn btn-primary" type="submit">Search Courses</button>
-        <a href="studentDashboard.html" class="btn btn-secondary">Cancel</a>
-    </form>
+            <button class="btn btn-primary" type="submit">Search Courses</button>
+            <a href="studentDashboard.html" class="btn btn-secondary">Cancel</a>
+        </form>
+
+        <p>Temporary "search results page": <a href="searchResults.html">Here</a></p>
+    </div>
 </main>
 </body>
 </html>

@@ -1,0 +1,22 @@
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+row {
+    max-width: 80%;
+}
+
+.btn-primary {
+    background: darkred;
+}
+
+.btn-primary:hover {
+    background: lightcoral;
+}
+.btn-primary:active {
+    background: darkred;
+}
+.btn-primary:focus {
+    background: lightcoral;
+}
