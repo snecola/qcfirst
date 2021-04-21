@@ -1,4 +1,8 @@
 # QCFirst
+
+Live deployed website:
+https://snecola.github.io/qcfirst/
+
 ## Goal:
 - Course enrollment / management system for professors and students.
 - Students can enroll, bookmark, and search for courses.
