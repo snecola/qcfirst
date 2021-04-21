@@ -1,4 +1,12 @@
 <!DOCTYPE html>
+<!--
+	Name: Steven Necola
+	Date: 4.20.2021
+	Section: CS355
+
+	Course view for instructors
+	TODO: Fix Navbar
+	-->
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
@@ -11,7 +19,6 @@
 </head>
 <body>
 <header id="header" class="header">
-
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="instructor-dash.html">
@@ -35,13 +42,13 @@
 			</div>
 		</div>
 	</nav>
-
 </header>
-
 <main>
 	<div class="container-fluid mainContainer">
 		<div class="row">
-			<div class="col"><h2 id="className" class="d-flex justify-content-center">CS355</h2></div>
+			<div class="col">
+				<h2 id="className" class="d-flex justify-content-center">CS355</h2>
+			</div>
 		</div>
 		<div class="row d-flex justify-content-center">
 			<a href="edit-course.html" class="btn btn-primary enrollBookmark">Edit</a>
@@ -69,7 +76,6 @@
 				</div>
 			</div>
 		</div>
-
 		<div class="row">
 			<div id="schedule" class="col box">
 				<img id="schedIcon" class="icons" src="images/calendar.svg" alt="schedIcon" width="32" height="32">
@@ -111,35 +117,32 @@
 						<td></td>
 					</tr>
 					</tbody>
-
 				</table>
 			</div>
 		</div>
-
-			<div class="row">
-				<div id="students" class="col box">
-					<img id="studentIcon" class="icons" src="images/person_icon.svg" alt="schedIcon" width="32" height="32">
-					<h3 class="subheadings">Students</h3>
-					<table class="table table-striped">
-						<thead>
-						<tr>
-							<th scope="col">Name</th>
-							<th scope="col">Email</th>
-							<th scope="col">ID</th>
-						</tr>
-						</thead>
-						<tbody>
-						<tr>
-							<td>Steven Necola</td>
-							<td>necola.steven@gmail.com</td>
-							<td>12345</td>
-						</tr>
-						</tbody>
-
-					</table>
-				</div>
+		<div class="row">
+			<div id="students" class="col box">
+				<img id="studentIcon" class="icons" src="images/person_icon.svg" alt="schedIcon" width="32" height="32">
+				<h3 class="subheadings">Students</h3>
+				<table class="table table-striped">
+					<thead>
+					<tr>
+						<th scope="col">Name</th>
+						<th scope="col">Email</th>
+						<th scope="col">ID</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr>
+						<td>Steven Necola</td>
+						<td>necola.steven@gmail.com</td>
+						<td>12345</td>
+					</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
+	</div>
 </main>
 </body>
 </html>

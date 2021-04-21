@@ -66,6 +66,6 @@ a {
     left: 10px;
 }
 
-ul {
+#information > ul {
     list-style: none;
 }
