@@ -16,6 +16,7 @@ app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '/docs')));
 
+// CONFIG TO BE REMOVED AND HIDDEN
 var mysqlConfig = {
     host     : 'remotemysql.com',
     port     : '3306',
@@ -24,6 +25,7 @@ var mysqlConfig = {
     database : 'MrMXroQJyp'
 }
 
+// CONNECT TO USER DATABASE
 var connection;
 function connectToDB (){
     // Create connection to DB
@@ -48,17 +50,32 @@ function connectToDB (){
     })
 }
 connectToDB();
-
+// INDEX LANDING PAGE
 app.get("/", (req, res)=>{
     res.sendFile(path.join(__dirname + "/docs/index.html"))
 })
-
+// LOGIN HANDLER
 app.post("/login", (req, res) => {
     var loginEmail = req.body.email;
     var loginPassword = req.body.password;
-    if (loginEmail && loginPassword) {
-        connection.query('SELECT * FROM accounts WHERE email = ? AND password = ?', [loginEmail, loginPassword])
-    }
+
+    connection.query('SELECT * FROM accounts WHERE email = ? AND password = ?', [loginEmail, loginPassword], (error, results, fields)=>{
+        if (results.length>0){
+            console.log(results[0].accountType);
+            req.session.loggedin = true;
+            console.log("Session started");
+            if(results[0].accountType === 'S'){
+                res.redirect("/student-dashboard");
+            }
+            if(results[0].accountType === 'T'){
+                res.redirect("/instructor-dashboard");
+            }
+
+        } else {
+            res.redirect("/login-failed")
+        }
+        res.end();
+    })
 })
 
 async function generatePass (pass) {
@@ -72,6 +89,7 @@ async function generatePass (pass) {
     return returnPass;
 }
 
+//REGISTER HANDLER
 app.post("/register", (req, res) =>{
     var regEmail = req.body.email;
     var regPassword = req.body.password;
@@ -95,7 +113,6 @@ app.post("/register", (req, res) =>{
                 })
                 res.redirect("/signup-success")
             }
-
         })
     } else {
         res.send('Invalid email');
@@ -107,14 +124,34 @@ app.post("/register", (req, res) =>{
 
 })
 
+//SIGNUP FAILED RESPONSE
 app.get("/signup-failed", (req, res)=>{
     console.log("/signup failed");
     res.sendFile(path.join(__dirname + "/docs/signup-failed.html"))
 })
 
+//SIGNUP SUCCESS RESPONSE
 app.get("/signup-success", (req, res)=>{
     console.log("/signup success");
     res.sendFile(path.join(__dirname + "/docs/index.html"))
+})
+
+//STUDENT LOGIN RESPONSE
+app.get("/student-dashboard", (req, res)=>{
+    console.log("/student-dashboard success");
+    res.sendFile(path.join(__dirname + "/docs/student-dashboard.html"));
+})
+
+//INSTRUCTOR LOGIN RESPONSE
+app.get("/instructor-dashboard", (req, res)=>{
+    console.log("/instructor-dashboard success");
+    res.sendFile(path.join(__dirname + "/docs/instructor-dash.html"));
+})
+
+//LOGIN FAILED RESPONSE
+app.get("/login-failed", (req, res)=>{
+    console.log("/login failed");
+    res.sendFile(path.join(__dirname + "/docs/login-failed.html"));
 })
 
 app.listen(3000);
