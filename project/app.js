@@ -154,4 +154,27 @@ app.get("/login-failed", (req, res)=>{
     res.sendFile(path.join(__dirname + "/docs/login-failed.html"));
 })
 
+app.post("/forgotpass", (req, res)=>{
+    console.log("/forgotpass");
+    var email = req.body.email;
+
+    connection.query('SELECT * FROM accounts WHERE email = ?', [email], (error, results, fields)=>{
+        if (results.length>0){
+            res.redirect("/forgotpass-sent")
+        } else {
+            res.redirect("/forgotpass-failed")
+        }
+        res.end();
+    })
+})
+
+app.get("/forgotpass-sent", (req, res) => {
+    console.log("/forgotpass sent");
+    res.sendFile(path.join(__dirname + "/docs/forgotpassword-sent.html"));
+})
+app.get("/forgotpass-failed", (req, res) => {
+    console.log("/forgotpass failed");
+    res.sendFile(path.join(__dirname + "/docs/forgotpassword-failed.html"));
+})
+
 app.listen(3000);
