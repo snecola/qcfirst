@@ -51,10 +51,12 @@ function connectToDB (){
     })
 }
 connectToDB();
+
 // INDEX LANDING PAGE
 app.get("/", (req, res)=>{
     res.sendFile(path.join(__dirname + "/docs/index.html"))
 })
+
 // LOGIN HANDLER
 app.post("/login", async function (req, res) {
     var loginEmail = req.body.email;
@@ -64,6 +66,7 @@ app.post("/login", async function (req, res) {
         if (results.length>0){
             var validPass = await bcrypt.compare(loginPassword, results[0].password)
             var accType = results[0].accountType;
+            var fullName = results[0].FirstName + " " + results[0].LastName;
             if (validPass) {
                 console.log(results[0].accountType);
 
@@ -71,6 +74,7 @@ app.post("/login", async function (req, res) {
                 req.session.loggedin = true;
                 req.session.userEmail = loginEmail;
                 req.session.accountType = accType;
+                req.session.fullName = fullName;
                 console.log("Session started", req.sessionID, req.session.loggedin, req.session.userEmail, req.session.accountType);
 
                 // SEE WHICH DASH TO REDIRECT THEM TO
@@ -182,6 +186,7 @@ app.get("/login-failed", (req, res)=>{
     res.sendFile(path.join(__dirname + "/docs/login-failed.html"));
 })
 
+//FORGOT PASS LANDING
 app.post("/forgotpass", (req, res)=>{
     console.log("/forgotpass");
     var email = req.body.email;
@@ -196,18 +201,7 @@ app.post("/forgotpass", (req, res)=>{
     })
 })
 
-//LOG OUT RESPONSE
-app.post("/logout", (req, res) => {
-    if (req.session) {
-        req.session.loggedin= false;
-        req.session.userEmail = null;
-        req.session.accountType = null;
-        console.log("Logged out", req.session.loggedin, req.session.userEmail, req.session.accountType)
-    } else {
-        console.log("Failed to find session");
-    }
-})
-
+//FORGOT PASS RESPONSES
 app.get("/forgotpass-sent", (req, res) => {
     console.log("/forgotpass sent");
     res.sendFile(path.join(__dirname + "/docs/forgotpassword-sent.html"));
@@ -216,5 +210,41 @@ app.get("/forgotpass-failed", (req, res) => {
     console.log("/forgotpass failed");
     res.sendFile(path.join(__dirname + "/docs/forgotpassword-failed.html"));
 })
+
+//LOG OUT RESPONSE
+app.post("/logout", (req, res) => {
+    if (req.session) {
+        req.session.loggedin= false;
+        req.session.userEmail = null;
+        req.session.accountType = null;
+        req.session.fullName = null;
+        console.log("Logged out", req.session.loggedin, req.session.userEmail, req.session.accountType)
+    } else {
+        console.log("Failed to find session");
+    }
+})
+
+//SESSION INFO
+app.get("/sessionInfo", async function (req,res) {
+    if (req.session){
+        var sessionInfo = {
+            accountType : req.session.accountType,
+            userEmail : req.session.userEmail,
+            fullName : req.session.fullName
+        }
+        console.log(sessionInfo);
+        console.log(res.end(JSON.stringify(sessionInfo)));
+    } else {
+        res.send(500).json({error:"Session not found"});
+    }
+})
+
+app.get("/instructorDash-update", async function (req, res){
+    //TO-DO ADD QUERY TO GATHER ALL CLASSES MATCHING INSTRUCTOR EMAIL FROM DATABASE
+
+})
+
+
+
 
 app.listen(3000);
