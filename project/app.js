@@ -1,3 +1,4 @@
+require('dotenv').config({ path: 'process.env' })
 var mysql = require('mysql');
 var express = require('express');
 var session = require('express-session');
@@ -9,7 +10,7 @@ var app = express();
 
 app.use(session({
     secret: 'Secret to be revisited and changed later for encryption',
-    resave: true,
+    resave: false,
     saveUninitialized: true
 }));
 app.use(bodyParser.urlencoded({extended : true}));
@@ -18,11 +19,11 @@ app.use(express.static(path.join(__dirname, '/docs')));
 
 // CONFIG TO BE REMOVED AND HIDDEN
 var mysqlConfig = {
-    host     : 'remotemysql.com',
-    port     : '3306',
-    user     : 'MrMXroQJyp',
-    password : 'mtEttXJXFE',
-    database : 'MrMXroQJyp'
+    host     : process.env.MYSQL_HOST,
+    port     : process.env.MYSQL_PORT,
+    user     : process.env.MYSQL_USER,
+    password : process.env.MYSQL_PASS,
+    database : process.env.MYSQL_DB
 }
 
 // CONNECT TO USER DATABASE
@@ -33,7 +34,7 @@ function connectToDB (){
     // Connect to db
     connection.connect((error)=>{
         if (error) {
-            console.error(`Could not connect to DB`, err);
+            console.error(`Could not connect to DB`, error);
             setTimeout(connectToDB, 3000);
         }
     });
@@ -55,22 +56,33 @@ app.get("/", (req, res)=>{
     res.sendFile(path.join(__dirname + "/docs/index.html"))
 })
 // LOGIN HANDLER
-app.post("/login", (req, res) => {
+app.post("/login", async function (req, res) {
     var loginEmail = req.body.email;
     var loginPassword = req.body.password;
 
-    connection.query('SELECT * FROM accounts WHERE email = ? AND password = ?', [loginEmail, loginPassword], (error, results, fields)=>{
+    connection.query('SELECT * FROM accounts WHERE email = ?', [loginEmail], async function (error, results, fields) {
         if (results.length>0){
-            console.log(results[0].accountType);
-            req.session.loggedin = true;
-            console.log("Session started");
-            if(results[0].accountType === 'S'){
-                res.redirect("/student-dashboard");
-            }
-            if(results[0].accountType === 'T'){
-                res.redirect("/instructor-dashboard");
-            }
+            var validPass = await bcrypt.compare(loginPassword, results[0].password)
+            var accType = results[0].accountType;
+            if (validPass) {
+                console.log(results[0].accountType);
 
+                // START EXPRESS SESSION
+                req.session.loggedin = true;
+                req.session.userEmail = loginEmail;
+                req.session.accountType = accType;
+                console.log("Session started", req.sessionID, req.session.loggedin, req.session.userEmail, req.session.accountType);
+
+                // SEE WHICH DASH TO REDIRECT THEM TO
+                if(accType === 'S'){
+                    res.redirect("/student-dashboard");
+                }
+                if(accType === 'T'){
+                    res.redirect("/instructor-dashboard");
+                }
+            } else {
+                res.redirect("/login-failed")
+            }
         } else {
             res.redirect("/login-failed")
         }
@@ -78,40 +90,45 @@ app.post("/login", (req, res) => {
     })
 })
 
+//GENERATE HASHED PASSWORD USING BCRYPT
 async function generatePass (pass) {
     const saltRounds = 10;
-    var returnPass;
-    var salt = await bcrypt.genSalt(saltRounds, (err, salt)=>{
-        var hashedPass = bcrypt.hash(pass, salt, (err, hash)=>{
-            returnPass = hash;
-        });
-    });
-    return returnPass;
+    var salt = await bcrypt.genSalt(saltRounds)
+    var hashedPass = await bcrypt.hash(pass, salt)
+    return hashedPass;
 }
 
 //REGISTER HANDLER
-app.post("/register", (req, res) =>{
+app.post("/register", async function (req, res) {
     var regEmail = req.body.email;
-    var regPassword = req.body.password;
+    var regPassword = await generatePass(req.body.password);
     var regFirstName = req.body.fName;
     var regLastName = req.body.lName;
     var accType = req.body.accType;
     console.log(regEmail, regPassword, regFirstName, regLastName, accType);
 
+    var regStatus = 0;
     if (regEmail) {
         connection.query('SELECT * FROM accounts WHERE email = ?', [regEmail], (error, results, fields) => {
             if (results.length > 0) {
                 console.error("Email already registered");
                 res.redirect('/signup-failed')
             } else {
-                connection.query('INSERT INTO accounts (`email`, `password`, `FirstName`, `LastName`, `accountType`) VALUES (?, ?, ?, ?, ?)', [regEmail, regPassword, regFirstName, regLastName, accType], (error, results, fields) =>{
+                connection.query('INSERT INTO accounts (`email`, `password`, `FirstName`, `LastName`, `accountType`) VALUES (?, ?, ?, ?, ?)', [regEmail, regPassword, regFirstName, regLastName, accType], function (error, results, fields) {
                     if (error) {
                         console.error('Error at insertion')
-                        res.end();
+                        regStatus = 500;
+                        res.end()
+                    } else {
+                        console.info(`Registered ${regEmail} successfully`);
+                        regStatus = 200;
                     }
-                    console.info(`Registered ${regEmail} successfully`);
+                    if (regStatus === 500) {
+                        res.redirect("/signup-failed");
+                    }else if (regStatus === 200) {
+                        res.redirect("/signup-success");
+                    }
                 })
-                res.redirect("/signup-success")
             }
         })
     } else {
@@ -139,13 +156,24 @@ app.get("/signup-success", (req, res)=>{
 //STUDENT LOGIN RESPONSE
 app.get("/student-dashboard", (req, res)=>{
     console.log("/student-dashboard success");
-    res.sendFile(path.join(__dirname + "/docs/student-dashboard.html"));
+    if (req.session.loggedin === false || req.session.accountType !== 'S') {
+        console.log("Unauthorized attempt to access Student Dashboard")
+        res.redirect('/index.html');
+    } else {
+        res.sendFile(path.join(__dirname + "/docs/student-dashboard.html"));
+    }
+
 })
 
 //INSTRUCTOR LOGIN RESPONSE
 app.get("/instructor-dashboard", (req, res)=>{
     console.log("/instructor-dashboard success");
-    res.sendFile(path.join(__dirname + "/docs/instructor-dash.html"));
+    if (req.session.loggedin === false || req.session.accountType !== 'T') {
+        console.log("Unauthorized attempt to access Instructor Dashboard")
+        res.redirect('/index.html');
+    } else {
+        res.sendFile(path.join(__dirname + "/docs/instructor-dash.html"));
+    }
 })
 
 //LOGIN FAILED RESPONSE
@@ -166,6 +194,18 @@ app.post("/forgotpass", (req, res)=>{
         }
         res.end();
     })
+})
+
+//LOG OUT RESPONSE
+app.post("/logout", (req, res) => {
+    if (req.session) {
+        req.session.loggedin= false;
+        req.session.userEmail = null;
+        req.session.accountType = null;
+        console.log("Logged out", req.session.loggedin, req.session.userEmail, req.session.accountType)
+    } else {
+        console.log("Failed to find session");
+    }
 })
 
 app.get("/forgotpass-sent", (req, res) => {
