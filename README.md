@@ -2,8 +2,6 @@
 
 Live deployed website:
 https://qcfirst.snecola.repl.co/forgotpass-sent
-Live deployed front-end demo:
-https://snecola.github.io/qcfirst/
 
 ## Goal:
 
