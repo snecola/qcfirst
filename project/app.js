@@ -5,6 +5,7 @@ var session = require('express-session');
 var bodyParser = require('body-parser');
 var bcrypt = require("bcrypt");
 var path = require('path');
+var querystring = require('querystring');
 
 var app = express();
 
@@ -239,9 +240,31 @@ app.get("/sessionInfo", async function (req,res) {
     }
 })
 
-app.get("/instructorDash-update", async function (req, res){
+app.get("/getInstructorCourses", async function (req, res){
     //TO-DO ADD QUERY TO GATHER ALL CLASSES MATCHING INSTRUCTOR EMAIL FROM DATABASE
+    connection.query('SELECT * FROM class WHERE InstructorEmail = ?', [req.session.userEmail], (error, results, fields)=>{
+        if (results.length>0){
+            console.log(results);
+            res.send(results);
+            res.end();
+        }
+        res.end();
+    })
+})
 
+app.get("/courseInfoInstructor", async function (req, res) {
+
+    let courseId = req.query.courseId;
+    console.log("CourseId info requested", courseId);
+
+    connection.query('SELECT * FROM class WHERE ClassId = ?', [courseId], (error, results, fields)=>{
+        if (results.length>0){
+            console.log(results);
+            res.send(results);
+            res.end();
+        }
+        res.end();
+    })
 })
 
 
