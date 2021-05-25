@@ -13,14 +13,14 @@ https://qcfirst.snecola.repl.co/
 
 ## Technologies Used:
 
-###Backend:
+### Backend:
 Node.js to handle the server.
 Express.js to handle sessions as well as many API functions.
 MySQL to handle the database.
 Remotemysql.com to host the database.
 Repl.it to host the website.
 
-###FrontEnd:
+### FrontEnd:
 HTML to create template sites for Course Views, dashboards, and functionality.
 jQuery with many get requests to fill the templates out with the user's proper information.
 Bootstrap to make sure everything looks nice and fits any screensize.
