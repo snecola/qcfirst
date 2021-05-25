@@ -6,10 +6,12 @@ https://qcfirst.snecola.repl.co/
 ## Goal:
 
 - Course enrollment / management system for professors and students.
-- Students can enroll, bookmark, and search for courses.
-- Professors can manage, add, and edit their courses.
+- Students can enroll and search for courses.
+- Professors can manage their courses and add new courses.
 
 ## Design:
+
+- My visual design has changed drastically from my initial visual design in order to make it more repsonsive and intuitive for users.
 
 ### Desktop Visual Design:
 
