@@ -1,7 +1,7 @@
 # QCFirst
 
 Live deployed website:
-https://qcfirst.snecola.repl.co/forgotpass-sent
+https://qcfirst.snecola.repl.co/
 
 ## Goal:
 
