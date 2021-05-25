@@ -452,7 +452,45 @@ app.post("/dropCourse", async function (req, res) {
         res.end();
     })
     res.redirect('/student-dashboard')
+})
 
+//ADMIN PAGE
+app.get("/admin", async function (req, res){
+    res.sendFile(path.join(__dirname + "/docs/adminpage.html"))
+})
+//ADMIN TABLES
+//ADMIN ACCOUNTS:
+app.get("/adminaccounts", async function(req,res){
+    var query = 'SELECT * FROM accounts'
+    connection.query(query, [], (error, results, fields)=>{
+        if (results.length>0){
+            res.send(results);
+            res.end();
+        }
+        res.end();
+    })
+})
+//ADMIN STUDENT:
+app.get("/adminstudent", async function(req,res){
+    var query = 'SELECT * FROM student'
+    connection.query(query, [], (error, results, fields)=>{
+        if (results.length>0){
+            res.send(results);
+            res.end();
+        }
+        res.end();
+    })
+})
+//ADMIN CLASS:
+app.get("/adminclass", async function(req,res){
+    var query = 'SELECT * FROM class'
+    connection.query(query, [], (error, results, fields)=>{
+        if (results.length>0){
+            res.send(results);
+            res.end();
+        }
+        res.end();
+    })
 })
 
 app.listen(3000);
