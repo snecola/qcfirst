@@ -63,8 +63,9 @@ $(document).ready(async function () {
     $("#searchButton").click(searchBarHandler)
 
     $("#courseSearchbar").keyup(function(e){
-        if(e.keyCode==32){
-            searchBarHandler;
+        if(e.key==="Enter"){
+            e.preventDefault();
+            searchBarHandler();
         }
     })
 

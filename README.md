@@ -3,15 +3,34 @@
 Live deployed website:
 https://qcfirst.snecola.repl.co/
 
-## Goal:
+## Contributers:
+- Steven Necola
 
+## Features:
 - Course enrollment / management system for professors and students.
 - Students can enroll and search for courses.
 - Professors can manage their courses and add new courses.
 
+## Technologies Used:
+
+###Backend:
+Node.js to handle the server.
+Express.js to handle sessions as well as many API functions.
+MySQL to handle the database.
+Remotemysql.com to host the database.
+Repl.it to host the website.
+
+###FrontEnd:
+HTML to create template sites for Course Views, dashboards, and functionality.
+jQuery with many get requests to fill the templates out with the user's proper information.
+Bootstrap to make sure everything looks nice and fits any screensize.
+CSS to distinguish the style.
+
 ## Design:
 
 - My visual design has changed drastically from my initial visual design in order to make it more repsonsive and intuitive for users.
+- Scrapped the Square button per class design and instead opted for a more streamline table with more information about the class.
+- Scrapped the modular course view pages and instead opted for a nice table design that had room vertically on smaller devices.
 
 ### Desktop Visual Design:
 
