@@ -8,6 +8,10 @@ $(document).ready(async function () {
     const userEmail = JSONInfo["userEmail"];
     const fullName = JSONInfo["fullName"];
 
+    if (!userEmail) {
+        window.location.href=`/`;
+    }
+
     $("#dashHeading").after(`<h4 class="d-flex justify-content-center">Welcome, ${fullName}</h4>`)
 
     await updateCourseList();
@@ -31,7 +35,7 @@ async function updateCourseList() {
         let semester = courseList[i]["Semester"];
 
         $("#courseList").prepend(`<button id="${i}" class="course-btn list-group-item list-group-item-action">${courseDep}${courseNum}-${courseId} ${instructorName} ${semester}</button>`)
-            .click((event) => {
+        $(`#${i}`).click((event) => {
             console.log(event)
             var url = "../course-manage-instructor.html?courseId=" + encodeURIComponent(courseId)
             window.location.href = url;

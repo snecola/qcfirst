@@ -8,6 +8,10 @@ $(document).ready(async function () {
     const userEmail = JSONInfo["userEmail"];
     const fullName = JSONInfo["fullName"];
 
+    if (!userEmail) {
+        window.location.href=`/`;
+    }
+
     console.log(accountType, userEmail, fullName);
 
     var queryString = new Array();

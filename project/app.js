@@ -348,13 +348,18 @@ app.post("/createCourse", function (req, res) {
                 VALUES
                 (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`
 
-    connection.query(query, [depName, depAcc, classNum, req.session.userEmail, req.session.fullName, semester, description, 0, capacity, weekdays, startTime, endTime, enrollmentDeadline], (error, results, fields)=>{
-        if (results.length>0){
-            console.log(results);
+    try {
+        connection.query(query, [depName, depAcc, classNum, req.session.userEmail, req.session.fullName, semester, description, 0, capacity, weekdays, startTime, endTime, enrollmentDeadline], (error, results, fields)=>{
+            if (results.length>0){
+                console.log(results);
+                res.end();
+            }
             res.end();
-        }
-        res.end();
-    })
+        })
+    } catch (e) {
+        console.error(e);
+    }
+
     res.sendFile(path.join(__dirname + "/docs/instructor-dash.html"))
 })
 
@@ -377,15 +382,36 @@ app.get("/deleteCourse", function (req, res) {
 app.post("/enrollInCourse", async function (req, res) {
     let courseId = req.query.courseId;
 
-    var query = 'INSERT INTO student (`StudentEmail`,`ClassId`) VALUES ( ? , ?)'
-
-    connection.query(query, [req.session.userEmail, courseId], (error, results, fields)=>{
+    let query1 = 'SELECT * FROM class WHERE ClassId = ?'
+    connection.query(query1, [courseId], (error, results, fields)=>{
         if (results.length>0){
-            console.log(results);
-            res.end();
+            let CountEnrolled = results[0]["CountEnrolled"];
+            let CountCapacity = results[0]["CountCapacity"];
+            let EnrollmentDeadline = results[0]["EnrollmentDeadline"];
+            let CurrentDate = new Date();
+            if (CountEnrolled < CountCapacity && (CurrentDate < Date.parse(EnrollmentDeadline))) {
+                var query2 = 'INSERT INTO student (`StudentEmail`,`ClassId`) VALUES ( ? , ?)'
+
+                connection.query(query2, [req.session.userEmail, courseId], (error, results, fields)=>{
+                    if (results.length>0){
+                        console.log(results);
+                        res.end();
+                    }
+                })
+
+                var query3 = 'UPDATE class SET CountEnrolled = CountEnrolled+1 WHERE ClassId = ?'
+                connection.query(query3, [courseId], (error, results, fields)=>{
+                    if (results.length>0){
+                        console.log(results);
+                        res.end();
+                    }
+                })
+            } else res.end()
         }
-        res.end();
     })
+
+
+
 })
 
 //SEARCH FOR COURSE USING SEARCH BAR
@@ -402,6 +428,31 @@ app.get("/searchForCourses", async function (req, res) {
         }
         res.end();
     })
+})
+
+//DROP A COURSE
+app.post("/dropCourse", async function (req, res) {
+    let courseToDrop = req.body.courseToDrop;
+    let courseId = (req.body.courseToDrop).split("-")[0];
+    console.log(courseToDrop, courseId)
+
+    var query1 = 'UPDATE class SET CountEnrolled = CountEnrolled-1 WHERE ClassId = ?'
+    connection.query(query1, [courseId], (error, results, fields)=>{
+        if (results.length>0){
+            console.log(results);
+        }
+    })
+
+    var query2 = 'DELETE FROM student WHERE StudentEmail = ? AND ClassId = ?';
+    connection.query(query2, [req.session.userEmail,courseId], (error, results, fields)=>{
+        if (results.length>0){
+            console.log(results);
+            res.end();
+        }
+        res.end();
+    })
+    res.redirect('/student-dashboard')
+
 })
 
 app.listen(3000);

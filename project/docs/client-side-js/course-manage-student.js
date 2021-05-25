@@ -8,6 +8,10 @@ $(document).ready(async function () {
     const userEmail = JSONInfo["userEmail"];
     const fullName = JSONInfo["fullName"];
 
+    if (!userEmail) {
+        window.location.href=`/`;
+    }
+
     console.log(accountType, userEmail, fullName);
 
     var queryString = new Array();
@@ -28,6 +32,15 @@ $(document).ready(async function () {
     var pageInfo = await $.get(`/courseInfo?courseId=${queryString.courseId}`)
     console.log("Course page info", pageInfo);
 
+    var courseStudentList = await $.get(`/courseStudentList?courseId=${queryString.courseId}`)
+    console.log("List of students", courseStudentList);
+
+    for (let i in courseStudentList) {
+        if (courseStudentList[i]["StudentEmail"] === userEmail){
+            $("#enrollBtn").css("display","none")
+        }
+    }
+
     const classId = pageInfo[0]["ClassId"];
     const classNum = pageInfo[0]["ClassNumber"];
     const depAcc = pageInfo[0]["DepartmentAcc"];
@@ -36,7 +49,7 @@ $(document).ready(async function () {
     const semester = pageInfo[0]["Semester"];
     const enrollDead = pageInfo[0]["EnrollmentDeadline"].split("T")[0];
     const countCap = pageInfo[0]["CountCapacity"];
-    const countEnrolled = pageInfo[0]["CountEnrolled"];
+    const countEnrolled = courseStudentList.length;
     const desc = pageInfo[0]["Description"];
     const startTime = pageInfo[0]["StartTime"];
     const endTime = pageInfo[0]["EndTime"];
@@ -60,7 +73,9 @@ $(document).ready(async function () {
 
     $("#enrollBtn").click(()=>{
         $.post(`/enrollInCourse?courseId=${queryString.courseId}`)
-        window.location.href = '../student-dashboard.html'
+        setTimeout(()=>{
+            window.location.href = '../student-dashboard.html'
+        }, 500)
     })
 
 })

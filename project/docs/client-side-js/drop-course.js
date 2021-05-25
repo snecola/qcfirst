@@ -8,6 +8,10 @@ $(document).ready(async function() {
     const userEmail = JSONInfo["userEmail"];
     const fullName = JSONInfo["fullName"];
 
+    if (!userEmail) {
+        window.location.href=`/`;
+    }
+
     var enrolledCourseList = await $.get('/getStudentCourses');
     console.log(enrolledCourseList);
 
@@ -23,6 +27,6 @@ $(document).ready(async function() {
         let instructorName = enrolledCourseList[i]["InstructorName"];
         let semester = enrolledCourseList[i]["Semester"];
 
-        courseToDrop.append(`<option id="${i}" class="course-btn list-group-item list-group-item-action">${courseDep}${courseNum}-${courseId} ${instructorName} ${semester}</option>`)
+        courseToDrop.append(`<option id="${i}" class="course-btn list-group-item list-group-item-action">${courseId}-${courseDep}${courseNum} ${instructorName} ${semester}</option>`)
     }
 })

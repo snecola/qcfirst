@@ -69,3 +69,8 @@ a {
 #information > ul {
     list-style: none;
 }
+
+#className {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

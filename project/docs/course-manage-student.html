@@ -13,7 +13,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Course View - QCFirst</title>
 	<!--Bootstrap JS and Popper hosted by jsdelivr-->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
+	<script src="client-side-js/jquery-3.6.0.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
 	<script src="client-side-js/course-manage-student.js" defer></script>
 	<!--Boot strap CSS hosted by jsdelivr-->
@@ -37,7 +37,7 @@
 			<div class="collapse navbar-collapse" id="navbarToggler">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 					<li class="nav-item">
-						<a class="nav-link active" aria-current="page" href="student-dashboard.html">Dashboard (current)</a>
+						<a class="nav-link active" aria-current="page" href="student-dashboard.html">Dashboard</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link active" id="logOutButton" aria-current="page" href="index.html">Log Out</a>
@@ -56,7 +56,6 @@
 		</div>
 		<div class="row d-flex justify-content-center">
 			<button id="enrollBtn" type="button" class="btn btn-primary enrollBookmark">Enroll</button>
-			<button id="bookmarkBtn" type="button" class="btn btn-secondary enrollBookmark">Bookmark</button>
 		</div>
 		<div class="row">
 			<div id="information" class="col box">
