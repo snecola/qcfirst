@@ -225,7 +225,7 @@ app.post("/logout", (req, res) => {
     }
 })
 
-//SESSION INFO
+//SESSION INFO - MAKE SURE THE USER IS AUTHORIZED
 app.get("/sessionInfo", async function (req,res) {
     if (req.session){
         var sessionInfo = {
@@ -240,8 +240,8 @@ app.get("/sessionInfo", async function (req,res) {
     }
 })
 
+// GET ALL COURSES FOR A SPECIFIC INSTRUCTOR
 app.get("/getInstructorCourses", async function (req, res){
-    //TO-DO ADD QUERY TO GATHER ALL CLASSES MATCHING INSTRUCTOR EMAIL FROM DATABASE
     connection.query('SELECT * FROM class WHERE InstructorEmail = ?', [req.session.userEmail], (error, results, fields)=>{
         if (results.length>0){
             console.log(results);
@@ -252,7 +252,8 @@ app.get("/getInstructorCourses", async function (req, res){
     })
 })
 
-app.get("/courseInfoInstructor", async function (req, res) {
+// RETRIEVE GENERAL INFORMATION FOR A GIVEN CLASS
+app.get("/courseInfo", async function (req, res) {
 
     let courseId = req.query.courseId;
     console.log("CourseId info requested", courseId);
@@ -267,7 +268,140 @@ app.get("/courseInfoInstructor", async function (req, res) {
     })
 })
 
+// RETRIEVE LIST OF STUDENTS FOR A GIVEN COURSE
+app.get("/courseStudentList", async function (req, res) {
+    let courseId = req.query.courseId;
+    console.log("CourseId info requested", courseId);
 
+    const query = 'SELECT StudentEmail, ClassId, A.FirstName, A.LastName, A.AccountType, A.Id as StudentId \n' +
+        'FROM student as S INNER JOIN accounts as A on S.StudentEmail = A.email WHERE ClassId = ?';
 
+    connection.query(query, [courseId], (error, results, fields)=>{
+        if (results.length>0){
+            console.log(results);
+            res.send(results);
+            res.end();
+        }
+        res.end();
+    })
+})
+
+// GET STUDENT'S ENROLLED COURSES
+app.get("/getStudentCourses", async function(req, res) {
+    var query = "SELECT * FROM class AS C inner join student AS S on S.ClassId = C.ClassId WHERE S.StudentEmail = ?"
+
+    connection.query(query, [req.session.userEmail], (error, results, fields)=>{
+        if (results.length>0){
+            console.log(results);
+            res.send(results);
+            res.end();
+        }
+        res.end();
+    })
+})
+
+//CREATE NEW COURSE
+app.post("/createCourse", function (req, res) {
+
+    var classNum = req.body.courseNum;
+    var depName = req.body.courseDepartment;
+    var depAcc = req.body.departmentAcc;
+    var semester = req.body.semester;
+    var description = req.body.description;
+    var capacity = req.body.capacity;
+    var mon = req.body.monday;
+    var tue = req.body.tuesday;
+    var wed = req.body.wednesday;
+    var thu = req.body.thursday;
+    var fri = req.body.friday;
+    var sat = req.body.saturday;
+    var sun = req.body.sunday;
+    var weekdays = "";
+    if (mon) weekdays+='M, ';
+    if (tue) weekdays+='T, ';
+    if (wed) weekdays+='W, ';
+    if (thu) weekdays+='TH, ';
+    if (fri) weekdays+='F, ';
+    if (sat) weekdays+='S, ';
+    if (sun) weekdays+='SU, ';
+    weekdays = weekdays.slice(0, weekdays.length-2);
+    var startTime = req.body.startTime;
+    var endTime = req.body.endTime;
+    var enrollmentDeadline = req.body.enrollmentDeadline;
+
+    //console.log(classNum, depName, depAcc, semester, description, capacity, weekdays, time);
+
+    var query =`INSERT INTO \`class\`
+                (\`DepartmentName\`,
+                \`DepartmentAcc\`,
+                \`ClassNumber\`,
+                \`InstructorEmail\`,
+                \`InstructorName\`,
+                \`Semester\`,
+                \`Description\`,
+                \`CountEnrolled\`,
+                \`CountCapacity\`,
+                \`ScheduleDays\`,
+                \`StartTime\`,
+                \`EndTime\`,
+                \`EnrollmentDeadline\`)
+                VALUES
+                (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`
+
+    connection.query(query, [depName, depAcc, classNum, req.session.userEmail, req.session.fullName, semester, description, 0, capacity, weekdays, startTime, endTime, enrollmentDeadline], (error, results, fields)=>{
+        if (results.length>0){
+            console.log(results);
+            res.end();
+        }
+        res.end();
+    })
+    res.sendFile(path.join(__dirname + "/docs/instructor-dash.html"))
+})
+
+//DELETE COURSE FUNCTIONALITY FOR INSTRUCTORS
+app.get("/deleteCourse", function (req, res) {
+    let courseId = req.query.courseId;
+    console.log("Delete course id:", courseId);
+
+    var query = 'DELETE FROM class WHERE ClassId = ?';
+    connection.query(query, [courseId], (error, results, fields)=>{
+        if (results.length>0){
+            console.log(results);
+            res.end();
+        }
+        res.end();
+    })
+})
+
+//ENROLL IN COURSE BUTTON
+app.post("/enrollInCourse", async function (req, res) {
+    let courseId = req.query.courseId;
+
+    var query = 'INSERT INTO student (`StudentEmail`,`ClassId`) VALUES ( ? , ?)'
+
+    connection.query(query, [req.session.userEmail, courseId], (error, results, fields)=>{
+        if (results.length>0){
+            console.log(results);
+            res.end();
+        }
+        res.end();
+    })
+})
+
+//SEARCH FOR COURSE USING SEARCH BAR
+app.get("/searchForCourses", async function (req, res) {
+    let searchString = req.query.search;
+    console.log(searchString)
+
+    var query = 'SELECT * FROM class WHERE CONCAT(DepartmentAcc,ClassNumber) = ?'
+    connection.query(query, [searchString], (error, results, fields)=>{
+        if (results.length>0){
+            console.log(results);
+            res.send(results);
+            res.end();
+        }
+        res.end();
+    })
+})
 
 app.listen(3000);

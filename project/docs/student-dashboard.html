@@ -11,12 +11,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Student Dashboard - QCFirst</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+    <script src="client-side-js/jquery-3.6.0.js"></script>
+    <script src="client-side-js/student-dash.js" defer></script>
     <!--Boot strap CSS hosted by jsdelivr-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <link href="style/dashboard.css" rel="stylesheet">
     <link href="images/QCFirst_No_Text_Icon.png" rel="icon">
-    <script src="client-side-js/instructorDash.js" defer></script>
 </head>
 <body>
 <header id="header" class="header">
@@ -53,11 +54,21 @@
         </div>
         <div id="addNewCourses" class="row">
             <h3 class="row d-flex justify-content-center">Add New Courses</h3>
-            <div class="row d-flex justify-content-center">
-                <input type="text" class="form-group col-10" placeholder="CS355" id="courseSearchbar">
-                <button id="searchButton" type="submit" class="btn btn-secondary col-2">Go</button>
+<!--            <form action="/searchForCourses" method="get">-->
+                <div class="row d-flex justify-content-center">
+                    <input name="courseSearchbar" type="text" class="form-group col-10" placeholder="CSCI355" id="courseSearchbar">
+                    <button id="searchButton" type="submit" class="btn btn-secondary col-2">Go</button>
+                </div>
+<!--            </form>-->
+
+<!--            <small><a class="d-flex justify-content-center" href="course-search.html">Advanced Search</a></small>-->
+        </div>
+        <div class="row d-flex justify-content-center">
+            <div id="searchResults" class="col courseContainers" style="display: none;">
+                <h3 class="row d-flex justify-content-center">Search Results</h3>
+                <div class="list-group" id="searchResultsList">
+                </div>
             </div>
-            <small><a class="d-flex justify-content-center" href="course-search.html">Advanced Search</a></small>
         </div>
         <br>
         <div class="row d-flex justify-content-center">
@@ -85,10 +96,6 @@
             </div>
         </div>
     </div>
-    <!--Unstyled image for STUDENTS-->
-    <!--<img src="../images/student.jpeg" alt="student" width="1880" height="1253">-->
 </main>
-<!--Bootstrap JS and Popper hosted by jsdelivr-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
 </body>
 </html>

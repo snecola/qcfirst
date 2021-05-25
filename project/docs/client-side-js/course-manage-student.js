@@ -25,9 +25,8 @@ $(document).ready(async function () {
     console.log(queryString);
     console.log(queryString.courseId);
 
-    var pageInfo = await $.get(`/courseInfoInstructor?courseId=${queryString.courseId}`)
-
-    console.log(pageInfo);
+    var pageInfo = await $.get(`/courseInfo?courseId=${queryString.courseId}`)
+    console.log("Course page info", pageInfo);
 
     const classId = pageInfo[0]["ClassId"];
     const classNum = pageInfo[0]["ClassNumber"];
@@ -59,9 +58,14 @@ $(document).ready(async function () {
         console.log(days[i]);
     }
 
-    updateCourseInfo(pageInfo);
+    $("#enrollBtn").click(()=>{
+        $.post(`/enrollInCourse?courseId=${queryString.courseId}`)
+        window.location.href = '../student-dashboard.html'
+    })
+
 })
 
-async function updateCourseInfo(pageInfo) {
-
-}
+$("#logOutButton").click(() => {
+    $.post("/logout")
+    window.location.href = "/"
+})
